@@ -14,7 +14,7 @@ import {
   ArrowRight,
   ShieldCheck
 } from 'lucide-react';
-import { PLATFORMS_DATA } from '../utils/platformDetector';
+import { PLATFORMS_DATA } from './utils/platformDetector';
 import { SupportedPlatformId } from '../types';
 
 interface PlatformGuideProps {
