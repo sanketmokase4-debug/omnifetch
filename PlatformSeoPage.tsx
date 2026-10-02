@@ -12,7 +12,9 @@ import {
   Layers,
   ChevronDown
 } from 'lucide-react';
-import { PLATFORMS_DATA } from '../utils/platformDetector';
+import { PLATFORMS_DATA } from './utils/platformDetector';
+import { SupportedPlatformId, MediaAnalysisResult } from './types';
+import { AnalysisResultCard } from './AnalysisResultCard';
 import { SupportedPlatformId, MediaAnalysisResult } from '../types';
 import { AnalysisResultCard } from './AnalysisResultCard';
 
