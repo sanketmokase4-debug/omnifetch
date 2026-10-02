@@ -19,7 +19,9 @@ import {
   Check
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { MediaAnalysisResult, QualityOption } from '../types';
+import { MediaAnalysisResult, QualityOption } from './types';
+import { initiateDownloadJob, checkJobStatus, trackDownloadEvent } from './services/apiService';
+import { useAuth } from './AuthContext';
 import { initiateDownloadJob, checkJobStatus, trackDownloadEvent } from '../services/apiService';
 import { useAuth } from '../context/AuthContext';
 import { initiateDownloadJob, checkJobStatus, trackDownloadEvent } from '../services/apiService';
