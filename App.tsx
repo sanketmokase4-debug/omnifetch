@@ -12,7 +12,7 @@ import { HistoryDrawer } from './HistoryDrawer';
 import { LegalModal } from './LegalModal';
 import { Footer } from './Footer';
 import { ThemeProvider } from './ThemeContext';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from "./AuthContext";
 import { analyzeMediaUrl } from './services/apiService';
 import { MediaAnalysisResult, SupportedPlatformId } from './types';
 import { PLATFORMS_DATA } from './utils/platformDetector';
