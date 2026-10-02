@@ -10,8 +10,7 @@ import {
   Send,
   Loader2
 } from 'lucide-react';
-import { submitDmcaReport } from '../firebase';
-
+import { submitDmcaReport } from "./firebase";
 interface LegalModalProps {
   isOpen: boolean;
   onClose: () => void;
