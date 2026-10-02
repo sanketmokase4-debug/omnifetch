@@ -9,7 +9,7 @@ import {
   Sparkles,
   LogIn
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from "./AuthContext";
 import { UserHistoryRecord } from '../types';
 
 interface HistoryDrawerProps {
