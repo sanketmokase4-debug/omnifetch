@@ -14,9 +14,9 @@ import {
   LayoutDashboard,
   FileText
 } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
-import { useAuth } from '../context/AuthContext';
-import { PLATFORMS_DATA } from '../utils/platformDetector';
+import { useTheme } from "./ThemeContext";
+import { useAuth } from "./AuthContext";
+import { PLATFORMS_DATA } from "./utils/platformDetector";
 import { SupportedPlatformId } from '../types';
 
 interface NavbarProps {
