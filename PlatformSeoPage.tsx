@@ -16,7 +16,6 @@ import { PLATFORMS_DATA } from './utils/platformDetector';
 import { SupportedPlatformId, MediaAnalysisResult } from './types';
 import { AnalysisResultCard } from './AnalysisResultCard';
 import { SupportedPlatformId, MediaAnalysisResult } from '../types';
-import { AnalysisResultCard } from './AnalysisResultCard';
 
 interface PlatformSeoPageProps {
   platformId: SupportedPlatformId;
