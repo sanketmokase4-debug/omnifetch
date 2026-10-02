@@ -1,0 +1,125 @@
+export const PLATFORMS_DATA = {
+  youtube: {
+    id: 'youtube',
+    name: 'YouTube',
+    icon: 'Youtube',
+    color: '#FF0000',
+  },
+  'youtube-shorts': {
+    id: 'youtube-shorts',
+    name: 'YouTube Shorts',
+    icon: 'Video',
+    color: '#FF0000',
+  },
+  instagram: {
+    id: 'instagram',
+    name: 'Instagram',
+    icon: 'Instagram',
+    color: '#E1306C',
+  },
+  'instagram-reels': {
+    id: 'instagram-reels',
+    name: 'Instagram Reels',
+    icon: 'Film',
+    color: '#E1306C',
+  },
+  tiktok: {
+    id: 'tiktok',
+    name: 'TikTok',
+    icon: 'Flame',
+    color: '#000000',
+  },
+  facebook: {
+    id: 'facebook',
+    name: 'Facebook',
+    icon: 'Facebook',
+    color: '#1877F2',
+  },
+  twitter: {
+    id: 'twitter',
+    name: 'X (Twitter)',
+    icon: 'Twitter',
+    color: '#000000',
+  },
+  pinterest: {
+    id: 'pinterest',
+    name: 'Pinterest',
+    icon: 'Pin',
+    color: '#E60023',
+  },
+  reddit: {
+    id: 'reddit',
+    name: 'Reddit',
+    icon: 'MessageSquare',
+    color: '#FF4500',
+  },
+  snapchat: {
+    id: 'snapchat',
+    name: 'Snapchat',
+    icon: 'Ghost',
+    color: '#FFFC00',
+  },
+  linkedin: {
+    id: 'linkedin',
+    name: 'LinkedIn',
+    icon: 'Linkedin',
+    color: '#0A66C2',
+  },
+  threads: {
+    id: 'threads',
+    name: 'Threads',
+    icon: 'AtSign',
+    color: '#000000',
+  },
+  generic: {
+    id: 'generic',
+    name: 'Direct Media',
+    icon: 'Globe',
+    color: '#666666',
+  },
+} as const;
+
+export function detectPlatform(url: string): string {
+  try {
+    const parsed = new URL(
+      url.trim().startsWith('http') ? url.trim() : `https://${url.trim()}`
+    );
+
+    const hostname = parsed.hostname.toLowerCase();
+    const pathname = parsed.pathname.toLowerCase();
+
+    if (hostname.includes('youtube.com') || hostname.includes('youtu.be')) {
+      return pathname.includes('/shorts/') ? 'youtube-shorts' : 'youtube';
+    }
+
+    if (
+      hostname.includes('instagram.com') ||
+      hostname.includes('instagr.am')
+    ) {
+      return pathname.includes('/reel/') || pathname.includes('/reels/')
+        ? 'instagram-reels'
+        : 'instagram';
+    }
+
+    if (hostname.includes('tiktok.com')) return 'tiktok';
+    if (hostname.includes('facebook.com') || hostname.includes('fb.watch')) {
+      return 'facebook';
+    }
+    if (hostname.includes('twitter.com') || hostname.includes('x.com')) {
+      return 'twitter';
+    }
+    if (hostname.includes('pinterest.com') || hostname.includes('pin.it')) {
+      return 'pinterest';
+    }
+    if (hostname.includes('reddit.com') || hostname.includes('redd.it')) {
+      return 'reddit';
+    }
+    if (hostname.includes('snapchat.com')) return 'snapchat';
+    if (hostname.includes('linkedin.com')) return 'linkedin';
+    if (hostname.includes('threads.net')) return 'threads';
+
+    return 'generic';
+  } catch {
+    return 'generic';
+  }
+}
