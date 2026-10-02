@@ -86,4 +86,4 @@ export async function fetchGlobalStats() {
   }
 
   return data;
-    }
+}
