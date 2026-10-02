@@ -20,9 +20,15 @@ import { fetchGlobalStats } from './services/apiService';
 import { GlobalStatsData } from './types';
 import { useAuth } from "./AuthContext";
 import { db } from "./firebase";
-import { collection, getDocs, query, orderBy, limit, doc, updateDoc } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '../firebase';
-
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  doc,
+  updateDoc
+} from 'firebase/firestore';
 interface AdminDashboardModalProps {
   isOpen: boolean;
   onClose: () => void;
