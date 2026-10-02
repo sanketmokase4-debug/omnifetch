@@ -20,7 +20,6 @@ import { fetchGlobalStats } from './services/apiService';
 import { GlobalStatsData } from './types';
 import { useAuth } from "./AuthContext";
 import { db } from "./firebase";
-import { useAuth } from '../context/AuthContext';
 import { collection, getDocs, query, orderBy, limit, doc, updateDoc } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../firebase';
 
