@@ -18,7 +18,8 @@ import {
   Pin,
   MessageSquare
 } from 'lucide-react';
-import { detectPlatform, PLATFORMS_DATA } from '../utils/platformDetector';
+import { detectPlatform, PLATFORMS_DATA } from './utils/platformDetector';
+import { SupportedPlatformId, MediaAnalysisResult } from './types';
 import { SupportedPlatformId, MediaAnalysisResult } from '../types';
 
 interface HeroDownloaderProps {
