@@ -7,8 +7,8 @@ import {
   saveToUserHistory,
   getUserHistory,
   deleteUserHistoryItem
-} from '../firebase';
-import { UserHistoryRecord } from '../types';
+} from './firebase'
+import { UserHistoryRecord } from './types'
 
 const ADMIN_EMAIL = 'babalumokase@gmail.com';
 
