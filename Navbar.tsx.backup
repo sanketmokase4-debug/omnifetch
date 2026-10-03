@@ -17,7 +17,7 @@ import {
 import { useTheme } from "./ThemeContext";
 import { useAuth } from "./AuthContext";
 import { PLATFORMS_DATA } from "./utils/platformDetector";
-import { SupportedPlatformId } from './types';
+import { SupportedPlatformId } from '../types';
 
 interface NavbarProps {
   onOpenHistory: () => void;

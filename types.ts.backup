@@ -1,8 +1,6 @@
 export type SupportedPlatformId =
   | 'youtube'
-  | 'youtube-shorts'
   | 'instagram'
-  | 'instagram-reels'
   | 'tiktok'
   | 'facebook'
   | 'twitter'
@@ -41,36 +39,4 @@ export interface MediaAnalysisResult {
   aspectRatio?: string;
   carouselItems?: CarouselItem[];
   qualities: QualityOption[];
-}
-
-export interface GlobalStatsData {
-  totalRequests: number;
-  successfulDownloads: number;
-  failedDownloads: number;
-  activeUsers: number;
-  formatBreakdown: Record<string, number>;
-  platformsBreakdown: Record<string, number>;
-}
-
-export interface UserHistoryRecord {
-  id: string;
-  userId: string;
-
-  platform?: string;
-  platformName?: string;
-
-  url: string;
-  originalUrl?: string;
-
-  title?: string;
-  thumbnailUrl?: string;
-  mediaType?: string;
-  author?: string;
-
-  selectedQuality?: string;
-  selectedFormat?: string;
-
-  createdAt: string | number;
-
-  status?: string;
 }

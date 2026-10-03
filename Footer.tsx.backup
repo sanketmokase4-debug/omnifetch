@@ -1,7 +1,7 @@
 import React from 'react';
 import { Download, ShieldCheck, Heart, ExternalLink } from 'lucide-react';
-import { PLATFORMS_DATA } from './utils/platformDetector';
-import { SupportedPlatformId } from './types';
+import { PLATFORMS_DATA } from '../utils/platformDetector';
+import { SupportedPlatformId } from '../types';
 
 interface FooterProps {
   onOpenLegal: (tab: 'privacy' | 'terms' | 'dmca' | 'contact') => void;

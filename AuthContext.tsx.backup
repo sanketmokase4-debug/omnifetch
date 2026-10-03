@@ -46,10 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loadHistory = async (userId: string) => {
     try {
       const items = await getUserHistory(userId);
-      setHistory(items.map((item) => ({
-        ...item,
-        userId
-      })) as UserHistoryRecord[]);
+      setHistory(items);
     } catch (err) {
       console.warn('Could not load history:', err);
     }
