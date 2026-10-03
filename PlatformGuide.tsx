@@ -15,7 +15,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { PLATFORMS_DATA } from './utils/platformDetector';
-import { SupportedPlatformId } from '../types';
+import { SupportedPlatformId } from './types';
 
 interface PlatformGuideProps {
   onSelectPlatform: (platformId: SupportedPlatformId) => void;
