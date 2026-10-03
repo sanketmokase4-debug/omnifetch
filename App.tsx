@@ -181,9 +181,9 @@ function MainContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
+      <React.Fragment>
         <MainContent />
-      </AuthProvider>
+      </React.Fragment>
     </ThemeProvider>
   );
 }
