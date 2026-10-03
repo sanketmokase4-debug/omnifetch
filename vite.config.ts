@@ -288,6 +288,7 @@ function apiServerPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
+    base: "/omnifetch/",
     plugins: [react(), tailwindcss(), apiServerPlugin()],
     resolve: {
       alias: {
@@ -301,5 +302,6 @@ export default defineConfig(() => {
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
-  };
-});
+
+    };
+  });
