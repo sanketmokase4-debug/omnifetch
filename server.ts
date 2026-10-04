@@ -64,6 +64,17 @@ interface JobStoreItem {
 
 const downloadJobs = new Map<string, JobStoreItem>();
 
+interface MediaSourceItem {
+  id: string;
+  url: string;
+  title: string;
+  platform: string;
+  thumbnailUrl?: string;
+  createdAt: number;
+}
+
+const mediaSources = new Map<string, MediaSourceItem>();
+
 // In-memory global stats cache
 const globalStats = {
   totalRequests: 48290,
@@ -362,6 +373,15 @@ app.post('/api/analyze', rateLimiter, async (req: Request, res: Response) => {
     const mediaId = 'media_' + Math.random().toString(36).substring(2, 10);
     const sanitizedTitle = sanitizeFilename(title);
 
+    mediaSources.set(mediaId, {
+      id: mediaId,
+      url: trimmedUrl,
+      title: sanitizedTitle,
+      platform,
+      thumbnailUrl,
+      createdAt: Date.now(),
+    });
+
     const qualities = [
       {
         id: 'q_1080p',
@@ -556,28 +576,83 @@ app.get('/api/status/:jobId', (req: Request, res: Response) => {
  * Streams or downloads public media file with proper Content-Disposition attachment header
  */
 app.get('/api/proxy-download', async (req: Request, res: Response) => {
-  const {
-    jobId,
-    title = 'OmniFetch_Download',
-    fmt = 'mp4',
-    q = '720p'
-  } = req.query;
+    const {
+      jobId,
+      id,
+      title = 'OmniFetch_Download',
+      fmt = 'mp4',
+      q = '720p'
+    } = req.query;
 
-  const job = jobId ? downloadJobs.get(String(jobId)) : undefined;
+    const job = jobId ? downloadJobs.get(String(jobId)) : undefined;
+    const mediaSource = !jobId && id
+      ? mediaSources.get(String(id))
+      : undefined;
 
-  if (!job) {
-    return res.status(404).json({ error: 'Download job not found or expired.' });
-  }
+    if (!job && !mediaSource) {
+      return res.status(404).json({ error: 'Download source not found or expired.' });
+    }
 
-  const sourceUrl = job.url;
-  const cleanTitle = sanitizeFilename(String(title || job.title || 'OmniFetch_Download'));
-  const tempDir = await fs.promises.mkdtemp(path.join(process.cwd(), 'omnifetch-'));
-  const outputBase = path.join(tempDir, 'media');
+    const sourceUrl = job?.url || mediaSource?.url;
 
-  try {
-    const isMp3 = String(fmt) === 'mp3';
-    const height = String(q) === '1080p' ? '1080' : '720';
+    if (!sourceUrl) {
+      return res.status(400).json({ error: 'Source URL is missing.' });
+    }
 
+    const cleanTitle = sanitizeFilename(
+      String(title || job?.title || mediaSource?.title || 'OmniFetch_Download')
+    );
+
+    const requestedFormat = String(fmt).toLowerCase();
+    const requestedQuality = String(q).toLowerCase();
+
+    if (requestedFormat === 'jpg' || requestedQuality === 'thumbnail') {
+      const thumbnailUrl = mediaSource?.thumbnailUrl;
+
+      if (!thumbnailUrl) {
+        return res.status(404).json({ error: 'Thumbnail not available.' });
+      }
+
+      const thumbnailResponse = await fetch(thumbnailUrl);
+
+      if (!thumbnailResponse.ok) {
+        return res.status(502).json({ error: 'Unable to fetch thumbnail.' });
+      }
+
+      const thumbnailBuffer = Buffer.from(
+        await thumbnailResponse.arrayBuffer()
+      );
+
+      res.setHeader('Content-Type', 'image/jpeg');
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename="${cleanTitle}.jpg"`
+      );
+      res.setHeader('Content-Length', thumbnailBuffer.length);
+
+      return res.end(thumbnailBuffer);
+    }
+
+    const isMp3 =
+      requestedFormat === 'mp3' ||
+      requestedQuality === 'audio';
+
+    const qualityMap: Record<string, string> = {
+      '1080p': '1080',
+      '720p': '720',
+      '480p': '480',
+      '360p': '360'
+    };
+
+    const height = qualityMap[requestedQuality] || '720';
+
+    const tempDir = await fs.promises.mkdtemp(
+      path.join(process.cwd(), 'omnifetch-')
+    );
+
+    const outputBase = path.join(tempDir, 'media');
+
+    try {
     const args = [
       '--no-playlist',
       '--ffmpeg-location',
