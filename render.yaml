@@ -1,7 +1,7 @@
 services:
   - type: web
     name: omnifetch-api
-    runtime: node
+    runtime: docker
     plan: free
     buildCommand: |
       apt-get update
