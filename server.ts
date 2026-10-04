@@ -713,7 +713,16 @@ async function startServer() {
   } else {
     // In production, serve dist folder
     const distPath = path.resolve(__dirname, 'dist');
-    app.use(express.static(distPath));
+
+    // GitHub Pages-style /omnifetch/ base path
+    app.use('/omnifetch', express.static(distPath));
+
+    // SPA fallback
+    app.get('/omnifetch/*', (_req: Request, res: Response) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+
+    // Root fallback
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
